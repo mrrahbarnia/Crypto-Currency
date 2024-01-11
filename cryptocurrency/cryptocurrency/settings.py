@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'bitcoin',
     'accounts',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,7 +58,7 @@ ROOT_URLCONF = 'cryptocurrency.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR/'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,7 +71,16 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'cryptocurrency.wsgi.application'
+ASGI_APPLICATION = "cryptocurrency.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("redis://redis:6379/1")],
+        },
+    },
+}
 
 
 # Database
@@ -119,6 +130,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -127,3 +143,31 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Celery config
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER', "redis://redis:6379/0")
 CELERY_RESULT_BACKEND = os.environ.get('CELERY_BACKEND', "redis://redis:6379/0")
+
+# Logging config
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': 'general.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'Album': {
+            'handlers': ['console', 'file'],
+            'level': os.environ.get('DJANGO_LOGGING_LEVEL', 'INFO')
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '{asctime} ({levelname}) - {name} - {message}',
+            'style': '{'
+        }
+    }
+}

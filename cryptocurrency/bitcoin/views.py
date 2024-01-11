@@ -1,3 +1,8 @@
-from django.shortcuts import render # noqa
+from django.shortcuts import render
 
-# Create your views here.
+
+def bitcoin_chart(request):
+
+    return render(request, 'bitcoin/chart.html')
+
+
