@@ -8,7 +8,6 @@ import asyncio
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from asgiref.sync import sync_to_async
 
-# 45,487.695
 
 class Watch:
 
@@ -25,7 +24,7 @@ class Watch:
         while True:
             await self.get_price()
             await asyncio.sleep(5)
-    
+
     async def get_price(self):
         url = 'https://api.coindesk.com/v1/bpi/currentprice.json'
         response = await sync_to_async(requests.get)(url)
@@ -36,10 +35,10 @@ class Watch:
                 continue
             future.set_result(currently_price)
         self.futures.clear()
-    
+
     def add_future(self, future):
         self.futures.append(future)
-    
+
 
 watch = Watch()
 
