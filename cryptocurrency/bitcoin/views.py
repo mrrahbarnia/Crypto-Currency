@@ -1,3 +1,6 @@
+"""
+Views for Bitcoin app.
+"""
 from django.shortcuts import render
 
 

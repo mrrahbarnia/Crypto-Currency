@@ -24,6 +24,7 @@
 
 
         <script src="{% static 'reconnecting-websocket.js' %}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js" integrity="sha512-UXumZrZNiOwnTcZSHLOfcTs0aos2MzBWHXOHOuB0J/R44QB0dwY5JgfbvljXcklVf65Gc4El6RjZ+lnwd2az2g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/2.0.1/chartjs-plugin-zoom.min.js" integrity="sha512-wUYbRPLV5zs6IqvWd88HIqZU/b8TBx+I8LEioQ/UC0t5EMCLApqhIAnUg7EsAzdbhhdgW07TqYDdH3QEXRcPOQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -71,6 +72,19 @@
                     }
                 }
                 };
+            
+            var url = '/bitcoin/api/';
+            var newGraphData = graphData.data.datasets[0].data;
+            var newGraphLabel = graphData.data.labels;
+            
+            $.get(url,
+                function (data, textStatus, jqXHR) {
+                for (price of data) {
+                    const val = price.price.replace('.','').replace(',','.')
+                    newGraphData.push(val)
+                    newGraphLabel.push('+15')
+                }
+                })
 
             var myChart = new Chart(ctx, graphData);
 

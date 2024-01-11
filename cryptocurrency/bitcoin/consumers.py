@@ -23,7 +23,7 @@ class Watch:
     async def get_price_loop(self):
         while True:
             await self.get_price()
-            await asyncio.sleep(5)
+            await asyncio.sleep(15)
 
     async def get_price(self):
         url = 'https://api.coindesk.com/v1/bpi/currentprice.json'

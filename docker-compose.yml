@@ -10,7 +10,10 @@ services:
     build: .
     ports:
       - 8000:8000
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000 && \
+             python manage.py makemigrations && \
+             python manage.py migrate && \
+             python manage.py create_fake_bitcoin
     env_file:
       - ./.env
     volumes:
@@ -21,13 +24,14 @@ services:
   celery:
     container_name: celery
     build: .
-    command: celery --app=cryptocurrency worker -l INFO
+    command: celery --app=cryptocurrency worker -l INFO -B
     env_file:
       - ./.env
     volumes:
       - ./cryptocurrency:/app/
     depends_on:
       - redis
+      - django
 
 
 networks:
