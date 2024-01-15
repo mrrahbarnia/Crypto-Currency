@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block navbarcontent %}
+<a class="navbar-brand flex-grow-1" style="text-align: center; color: #fff; margin-left: 25px;">
+    Login Page
+</a>
+{% endblock %}
+
+
+
+{% block container %}
+
+<div id="wrapper" class="container mt-5">
+    <div class="card p-3 border-dark">
+        <form id="loginForm" method="post" autocomplete="off" novalidate>
+            {% csrf_token %}
+            <div class="input-group mt-2">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput" placeholder="name@example.com">
+                        <label for="passwordFormControlInput" class="form-label mt-3">Password</label>
+                        <input type="password" class="form-control" id="passwordFormControlInput">
+                        <div class="mt-5 text-center">
+                            <a href="#!">Forgot password?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input class="btn btn-outline-dark mt-2 mb-1" id='submit' type="submit" value="Login" style="width: 100%;">
+        </form>
+    </div>
+</div>
+
+<script>
+
+
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+
+    var form = document.getElementById('wrapper')
+    form.addEventListener('submit', function(e){
+    e.preventDefault()
+    var url = 'http://127.0.0.1:8000/accounts/api/login/'
+    var email = document.getElementById('exampleFormControlInput').value;
+    var password = document.getElementById('passwordFormControlInput').value;
+    fetch(url, {
+        method:'POST',
+        headers:{
+            'Content-type':'application/json',
+            'X-CSRFToken':csrftoken,
+        },
+        body:JSON.stringify({'email':email,'password':password})
+    }
+    ).then(response => response.json())
+    .then(data => {
+        console.log(data.detail)
+    }
+    ).catch(error => {
+        console.log(error)
+    })
+    })
+
+
+</script>
+
+{% endblock %}
+
+{% block footer %}Good Luck{% endblock %}
+
+

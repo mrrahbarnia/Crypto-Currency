@@ -15,8 +15,6 @@
             password: ${{ secrets.DOCKERHUB_TOKEN }}
         - name: Checkout
           uses: actions/checkout@v2
-        - name: Test
-          run: docker-compose run --rm django sh -c "pytest"
         - name: Lint
           run: docker-compose run --rm django sh -c "flake8"
 

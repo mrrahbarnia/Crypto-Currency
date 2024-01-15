@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'accounts',
     'rest_framework',
     'drf_spectacular',
+    'rest_framework.authtoken',
 ]
 
 
@@ -142,6 +143,9 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# CustomUser config
+AUTH_USER_MODEL = "accounts.User"
+
 # Celery config
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER', "redis://redis:6379/0")
 CELERY_RESULT_BACKEND = os.environ.get('CELERY_BACKEND', "redis://redis:6379/0")
@@ -176,5 +180,9 @@ LOGGING = {
 
 # Rest API documentation config
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+
+        'rest_framework.authentication.SessionAuthentication',
+    ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }

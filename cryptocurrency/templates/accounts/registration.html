@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}SignUp{% endblock title %}
+
+{% block navbarcontent %}
+<a class="navbar-brand flex-grow-1" style="text-align: center; color: #fff; margin-left: 25px;">
+    SignUp Page
+</a>
+{% endblock %}
+
+
+{% block container %}
+
+<div class="container mt-5">
+    <div class="card p-3 border-dark">
+        <form method="post" autocomplete="off" novalidate>
+            <div class="input-group mt-2">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput" placeholder="name@example.com">
+                        <label for="passwordFormControlInput" class="form-label mt-3">Password</label>
+                        <input type="password" class="form-control" id="passwordFormControlInput">
+                        <label for="passwordFormControlInput1" class="form-label mt-3">Confirm Password</label>
+                        <input type="password" class="form-control" id="passwordFormControlInput1">
+                        <div class="mt-5 text-center">
+                            <a href="#!">Have an account?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input class="btn btn-outline-dark mt-2 mb-1" type="submit" value="Sing Up" style="width: 100%;">
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}Good Luck{% endblock %}

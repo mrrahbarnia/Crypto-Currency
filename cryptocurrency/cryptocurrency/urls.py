@@ -15,6 +15,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('bitcoin/', include('bitcoin.urls')),
     path('bitcoin/api/', include('bitcoin.api.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('accounts/api/', include('accounts.api.urls')),
     # ========== Rest api documentation for development ==========
     path('api/', SpectacularAPIView.as_view(), name='schema'),
     path(
